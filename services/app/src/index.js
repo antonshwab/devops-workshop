@@ -5,4 +5,6 @@ app.use(async ctx => {
   ctx.body = 'Hello World';
 });
 
+console.log("!!!");
+
 app.listen(3000);
