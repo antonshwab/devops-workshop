@@ -21,5 +21,5 @@ services:
       - "8080:80"
     volumes:
       - "~/.bashrc:/root/.bashrc:cached"
- #     - "./services/nginx/devopsanton.conf:/etc/nginx/conf.d/devopsanton.conf"
+      - "./services/nginx/devopsanton.conf:/etc/nginx/conf.d/devopsanton.conf"
       - "./services/nginx/maintenance.html:/etc/nginx/html/maintenance.html"

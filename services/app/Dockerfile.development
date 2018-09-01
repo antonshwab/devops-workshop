@@ -2,4 +2,6 @@ FROM node:10
 
 ENV PROJECT_ROOT /usr/src/app
 
+RUN npm config set strict-ssl false
+
 WORKDIR $PROJECT_ROOT
