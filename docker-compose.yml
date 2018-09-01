@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile.development
     command: sh -c "npm start"
     ports:
-      - "8080:3000"
+      - "3000:3000"
     volumes:
       - "~/.bash_history:/.bash_history"
       - "./services/app:/usr/src/app:cached"
@@ -20,8 +20,8 @@ services:
       context: services/nginx
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8080:80"
     volumes:
       - "~/.bashrc:/root/.bashrc:cached"
-      - "./services/nginx/devopsanton.conf:/devopsanton.conf"
+      - "./services/nginx/devopsanton.conf:/etc/nginx/conf.d/devopsanton.conf"
       - "./services/nginx/maintenance.html:/etc/nginx/html/maintenance.html"
