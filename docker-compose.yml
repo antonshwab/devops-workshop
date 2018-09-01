@@ -1,0 +1,27 @@
+version: '3.3'
+
+services:
+  app:
+    build:
+      context: services/app
+      dockerfile: Dockerfile.development
+    command: sh -c "npm start"
+    ports:
+      - "8080:3000"
+    volumes:
+      - "~/.bash_history:/.bash_history"
+      - "./services/app:/usr/src/app:cached"
+      - "/tmp:/tmp:delegated"
+    depends_on:
+      - nginx
+
+  nginx:
+    build:
+      context: services/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - "~/.bashrc:/root/.bashrc:cached"
+      - "./services/nginx/devopsanton.conf:/devopsanton.conf"
+      - "./services/nginx/maintenance.html:/etc/nginx/html/maintenance.html"
