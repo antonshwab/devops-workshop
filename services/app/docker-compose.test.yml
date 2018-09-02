@@ -1,3 +1,5 @@
 sut:
-  build: .
+  build:
+      context: services/app
+      dockerfile: Dockerfile.production
   command: sh -c "npm test"
