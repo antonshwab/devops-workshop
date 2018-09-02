@@ -8,6 +8,7 @@ COPY package.json ./
 COPY package-lock.json ./
 
 # Install all production dependencies
+ENV NODE_ENV=production
 RUN npm install
 
 COPY . .

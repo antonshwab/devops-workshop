@@ -6,7 +6,7 @@ services:
     build:
       context: services/app
       dockerfile: Dockerfile.development
-    command: sh -c "npm start"
+    command: npm start
     ports:
       - "${APP_PORT}:${APP_PORT}"
     volumes:
