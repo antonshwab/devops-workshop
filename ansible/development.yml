@@ -1,0 +1,16 @@
+---
+
+- hosts: all
+  gather_facts: no
+  tasks:
+    # - pip:
+    #     executable: pip3
+    #     name: "{{ item }}"
+    #   with_items:
+    #     - docker
+    #     - docker-py
+
+    - template:
+        src: environment.j2
+        dest: '../.env'
+      tags: env

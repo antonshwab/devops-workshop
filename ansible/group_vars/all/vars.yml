@@ -1,0 +1,5 @@
+---
+
+nginx_port: 80
+app_port: 3000
+app_domain: devopsanton.test

@@ -20,3 +20,6 @@ app-setup: app-build
 
 app-setup-root: app-build
 	docker-compose run app npm install
+
+development-setup-env:
+	ansible-playbook ansible/development.yml -i ansible/development -vv
