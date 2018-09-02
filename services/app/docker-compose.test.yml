@@ -3,6 +3,6 @@ version: '2.2'
 services:
   sut:
     build:
-      context: services/app
+      context: .
       dockerfile: Dockerfile.production
     command: sh -c "npm test"
