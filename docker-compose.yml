@@ -2,12 +2,13 @@ version: '3.3'
 
 services:
   app:
+    env_file: ".env"
     build:
       context: services/app
       dockerfile: Dockerfile.development
     command: sh -c "npm start"
     ports:
-      - "3000:3000"
+      - "${APP_PORT}:${APP_PORT}"
     volumes:
       - "~/.bash_history:/.bash_history"
       - "./services/app:/usr/src/app:cached"
@@ -18,7 +19,7 @@ services:
       context: services/nginx
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "${NGINX_PORT}:${NGINX_PORT}"
     volumes:
       # - "./services/nginx/devopsanton.conf:/etc/nginx/conf.d/devopsanton.conf"
       - "./services/nginx/maintenance.html:/etc/nginx/html/maintenance.html"

@@ -15,11 +15,17 @@ app-bash:
 app-bash-root:
 	docker-compose run app bash
 
-app-setup: app-build
+app-setup: development-setup-env app-build
 	docker-compose run --user=$(USER) app npm install
 
-app-setup-root: app-build
+app-setup-root: development-setup-env app-build
 	docker-compose run app npm install
 
-development-setup-env:
-	ansible-playbook ansible/development.yml -i ansible/development -vv
+
+production-app-build:
+	docker-compose -f docker-compose.prod.yml build
+
+app-setup-production: production-setup-env production-app-build
+
+app-production:
+	docker-compose -f docker-compose.prod.yml up

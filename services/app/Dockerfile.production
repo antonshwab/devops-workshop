@@ -1,0 +1,15 @@
+FROM node:10
+
+ENV PROJECT_ROOT /usr/src/app
+WORKDIR $PROJECT_ROOT
+
+# Copy all dependencies files
+COPY package.json ./
+COPY package-lock.json ./
+
+# Install all production dependencies
+RUN npm install
+
+COPY . .
+
+CMD ["npm", "start"]
