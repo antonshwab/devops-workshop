@@ -1,7 +1,8 @@
 version: '2.2'
 
-sut:
-  build:
+services:
+  sut:
+    build:
       context: services/app
       dockerfile: Dockerfile.production
-  command: sh -c "npm test"
+    command: sh -c "npm test"
