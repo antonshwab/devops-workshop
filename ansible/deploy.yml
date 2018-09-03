@@ -37,7 +37,7 @@
 
     - name: start nginx
       docker_container:
-        # recreate: true
+        recreate: true
         name: devopsanton-nginx
         image: "{{ devopsanton.nginx_image_name  }}:{{ devopsanton_image_tag  }}"
         state: started
@@ -51,7 +51,7 @@
     - name: start application
       docker_container:
         recreate: true
-        name: devopsanton-app
+        name: app
         image: "{{ devopsanton.app_image_name  }}"
         state: started
         restart_policy: always
