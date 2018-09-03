@@ -1,11 +1,8 @@
 VPF := tmp/ansible-vault-password
+U := root
 
 development-setup-env:
 	ansible-playbook ansible/development.yml -i ansible/development -vv
-
-
-production-setup-env:
-	ansible-playbook ansible/development.yml -i ansible/production -vv --vault-password-file=$(VPF)
 
 
 ansible-vaults-encrypt:
@@ -18,3 +15,18 @@ ansible-vaults-decrypt:
 
 ansible-vaults-edit:
 	ansible-vault edit ansible/production/group_vars/all/vault.yml --vault-password-file=$(VPF)
+
+
+
+
+
+ansible-deps-install:
+	ansible-galaxy install -r requirements.yml
+
+
+production-setup-env:
+	ansible-playbook ansible/development.yml -i ansible/production -u $U -vv --vault-password-file=$(VPF)
+
+
+production-setup:
+	ansible-playbook ansible/site.yml -i ansible/production -u $U -vv --vault-password-file=$(VPF)

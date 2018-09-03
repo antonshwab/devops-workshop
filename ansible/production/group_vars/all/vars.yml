@@ -1,0 +1,7 @@
+---
+
+devopsanton_run_user: ubuntu
+
+# TODO
+# move here from vault node_env variable and
+# add some sensitive variable to vault: token to rollbar
