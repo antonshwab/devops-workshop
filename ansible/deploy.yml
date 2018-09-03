@@ -1,0 +1,75 @@
+---
+
+- hosts: all
+  gather_facts: false
+  vars_prompt:
+    - name: "devopsanton_image_tag"
+      prompt: "Devopsanton image tag"
+      private: false
+
+  tasks:
+    - set_fact: devopsanton_image_tag={{ devopsanton_image_tag  }}
+      tags: always
+
+
+- hosts: webservers
+  gather_facts: false
+
+  tasks:
+    - name: Create a network
+      docker_network:
+        name: "{{ devopsanton.docker_network }}"
+
+    - template:
+        src: environment.j2
+        dest: "{{ devopsanton.env_file  }}"
+      tags: env
+
+    - name: download app image
+      docker_image:
+        name: "{{ devopsanton.app_image_name}}:{{ devopsanton_image_tag  }}" # TODO: later try tagged image
+        force: true
+
+    - name: download nginx image
+      docker_image:
+        name: "{{ devopsanton.nginx_image_name }}:"
+        force: true
+
+    - name: start nginx
+      docker_container:
+        # recreate: true
+        name: devopsanton-nginx
+        image: "{{ devopsanton.nginx_image_name  }}:{{ devopsanton_image_tag  }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "8080:8080"
+        networks:
+          - name: "{{ devopsanton.docker_network  }}"
+      tags: [webserver]
+
+    - name: start application
+      docker_container:
+        recreate: true
+        name: devopsanton-app
+        image: "{{ devopsanton.app_image_name  }}"
+        state: started
+        restart_policy: always
+        env_file: "{{ devopsanton.env_file  }}"
+        # env:
+        #   NODE_ENV: production
+        ports:
+          - "80:{{ devopsanton.app_port }}"
+        # volumes:
+        #   - "/var/run/docker.sock:/var/run/docker.sock" # https://medium.com/lucjuggery/about-var-run-docker-sock-3bfd276e12fd
+        networks:
+          - name: "{{ devopsanton.docker_network  }}"
+      tags: [webserver, app]
+
+    - lineinfile:
+        regexp: "DEVOPSANTON_VERSION"
+        line: "DEVOPSANTON_VERSION={{ devopsanton_image_tag }}"
+        dest: /etc/environment # to know app version in environment
+        backup: true
+        state: present
+      become: true

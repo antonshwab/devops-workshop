@@ -24,9 +24,15 @@ ansible-deps-install:
 	ansible-galaxy install -r requirements.yml
 
 
+
+
 production-setup-env:
 	ansible-playbook ansible/development.yml -i ansible/production -u $U -vv --vault-password-file=$(VPF)
 
 
 production-setup:
 	ansible-playbook ansible/site.yml -i ansible/production -u $U -vv --vault-password-file=$(VPF)
+
+
+production-deploy:
+	ansible-playbook ansible/deploy.yml -i ansible/production -u $U -vv --vault-password-file=$(VPF)
