@@ -36,3 +36,5 @@ production-setup:
 
 production-deploy:
 	ansible-playbook ansible/deploy.yml -i ansible/production -u $U -vv --vault-password-file=$(VPF)
+
+production-all: production-setup-env production-setup production-deploy
